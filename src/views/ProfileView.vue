@@ -131,7 +131,7 @@ export default {
     methods: {
         getFeed() {
             axios
-                .get(`/api/posts/profile/${this.$route.params.id/}`)
+                .get(`/api/posts/profile/${this.$route.params.id}/`)
                 .then(response => {
                     console.log('data', response.data)
 
