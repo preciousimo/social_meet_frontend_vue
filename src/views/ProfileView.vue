@@ -7,8 +7,28 @@
                 <p><strong>{{ user.name}}</strong></p>
 
                 <div class="mt-6 flex space-x-8 justify-around">
-                    <p class="text-xs text-gray-500">103 friends</p>
+                    <RouterLink :to="{name: 'friends', params: {id: user.id}}" class="text-xs text-gray-500">
+                        {{ user.friends_count }} friends
+                    </RouterLink>
                     <p class="text-xs text-gray-500">10 posts</p>
+                </div>
+
+                <div class="mt-6">
+                    <button 
+                        class="inline-block py-4 px-3 bg-purple-600 text-xs text-white rounded-lg" 
+                        @click="sendFriendshipRequest"
+                        v-if="userStore.user.id !== user.id"
+                    >
+                        Send friendship request
+                    </button>
+
+                    <button 
+                        class="inline-block py-4 px-3 bg-red-600 text-xs text-white rounded-lg" 
+                        @click="logout"
+                        v-if="userStore.user.id === user.id"
+                    >
+                        Log out
+                    </button>
                 </div>
             </div>
         </div>
@@ -53,13 +73,18 @@ import PeopleYouMayKnow from '../components/PeopleYouMayKnow.vue'
 import Trends from '../components/Trends.vue'
 import FeedItem from '../components/FeedItem.vue'
 import { useUserStore } from '@/stores/user'
+import { useToastStore } from '@/stores/toast'
+
 export default {
     name: 'FeedView',
 
     setup() {
         const userStore = useUserStore()
+        const toastStore = useToastStore()
+
         return {
-            userStore
+            userStore,
+            toastStore
         }
     },
 
@@ -72,7 +97,9 @@ export default {
     data() {
         return {
             posts: [],
-            user: {},
+            user: {
+                id: null
+            },
             body: '',
         }
     },
@@ -90,8 +117,25 @@ export default {
             immediate: true
         }
     },
-    
+
     methods: {
+        sendFriendshipRequest() {
+            axios
+                .post(`/api/friends/${this.$route.params.id}/request/`)
+                .then(response => {
+                    console.log('data', response.data)
+
+                    if (response.data.message == 'request already sent') {
+                        this.toastStore.showToast(5000, 'The request has already been sent!', 'bg-red-300')
+                    } else {
+                        this.toastStore.showToast(5000, 'The request was sent!', 'bg-emerald-300')
+                    }
+                })
+                .catch(error => {
+                    console.log('error', error)
+                })
+        },
+
         getFeed() {
             axios
                 .get(`/api/posts/profile/${this.$route.params.id}/`)
