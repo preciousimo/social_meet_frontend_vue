@@ -166,6 +166,14 @@ export default {
                 .catch(error => {
                     console.log('error', error)
                 })
+        },
+
+        logout() {
+            console.log('log out!')
+
+            this.userStore.removeToken()
+
+            this.$router.push('/login')
         }
     }
 }
