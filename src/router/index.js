@@ -47,9 +47,19 @@ const router = createRouter({
       component: ChatView
     },
     {
+      path: '/notifications',
+      name: 'notifications',
+      component: NotificationsView
+    },
+    {
       path: '/profile/edit',
       name: 'editprofile',
       component: EditProfileView
+    },
+    {
+      path: '/profile/edit/password',
+      name: 'editpassword',
+      component: EditPasswordView
     },
     {
       path: '/profile/:id',
@@ -70,16 +80,6 @@ const router = createRouter({
       path: '/trends/:id',
       name: 'trendview',
       component: TrendView
-    },
-    {
-      path: '/profile/edit/password',
-      name: 'editpassword',
-      component: EditPasswordView
-    },
-    {
-      path: '/notifications',
-      name: 'notifications',
-      component: NotificationsView
     },
     {
       path: '/about',

@@ -6,7 +6,7 @@
             >
                 <h2 class="text-xl">Trend: #{{ $route.params.id }}</h2>
             </div>
-
+            
             <div 
                 class="p-4 bg-white border border-gray-200 rounded-lg"
                 v-for="post in posts"
@@ -29,21 +29,26 @@ import axios from 'axios'
 import PeopleYouMayKnow from '../components/PeopleYouMayKnow.vue'
 import Trends from '../components/Trends.vue'
 import FeedItem from '../components/FeedItem.vue'
+
 export default {
     name: 'FeedView',
+
     components: {
         PeopleYouMayKnow,
         Trends,
         FeedItem
     },
+
     data() {
         return {
             posts: [],
         }
     },
+
     mounted() {
         this.getFeed()
     },
+
     watch: { 
         '$route.params.id': {
             handler: function() {
@@ -53,12 +58,14 @@ export default {
             immediate: true
         }
     },
+
     methods: {
         getFeed() {
             axios
                 .get(`/api/posts/?trend=${this.$route.params.id}`)
                 .then(response => {
                     console.log('data', response.data)
+
                     this.posts = response.data
                 })
                 .catch(error => {

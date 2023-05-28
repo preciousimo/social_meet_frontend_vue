@@ -19,6 +19,7 @@
 
         <div class="main-right col-span-1 space-y-4">
             <PeopleYouMayKnow />
+
             <Trends />
         </div>
     </div>
@@ -30,8 +31,10 @@ import PeopleYouMayKnow from '../components/PeopleYouMayKnow.vue'
 import Trends from '../components/Trends.vue'
 import FeedItem from '../components/FeedItem.vue'
 import FeedForm from '../components/FeedForm.vue'
+
 export default {
     name: 'FeedView',
+
     components: {
         PeopleYouMayKnow,
         Trends,
@@ -67,7 +70,6 @@ export default {
         deletePost(id) {
             this.posts = this.posts.filter(post => post.id !== id)
         },
-
     }
 }
 </script>

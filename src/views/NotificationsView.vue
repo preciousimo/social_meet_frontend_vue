@@ -24,34 +24,42 @@
 
 <script>
 import axios from 'axios'
+
 export default {
     name: 'notifications',
+
     data() {
         return {
             notifications: []
         }
     },
+
     mounted() {
         this.getNotifications()
     },
+
     methods: {
         getNotifications() {
             axios
                 .get('/api/notifications/')
                 .then(response => {
                     console.log(response.data)
+
                     this.notifications = response.data
                 })
                 .catch(error => {
                     console.log('Error: ', error)
                 })
         },
+
         async readNotification(notification) {
             console.log('readNotification', notification.id)
+
             await axios
                 .post(`/api/notifications/read/${notification.id}/`)
                 .then(response => {
                     console.log(response.data)
+
                     if (notification.type_of_notification == 'post_like' || notification.type_of_notification == 'post_comment') {
                         this.$router.push({name: 'postview', params: {id: notification.post_id}})
                     } else {

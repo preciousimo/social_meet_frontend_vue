@@ -43,14 +43,17 @@ import PeopleYouMayKnow from '../components/PeopleYouMayKnow.vue'
 import Trends from '../components/Trends.vue'
 import FeedItem from '../components/FeedItem.vue'
 import CommentItem from '../components/CommentItem.vue'
+
 export default {
     name: 'PostView',
+
     components: {
         PeopleYouMayKnow,
         Trends,
         FeedItem,
         CommentItem
     },
+
     data() {
         return {
             post: {
@@ -60,29 +63,35 @@ export default {
             body: ''
         }
     },
+
     mounted() {
         this.getPost()
     },
+
     methods: {
         getPost() {
             axios
                 .get(`/api/posts/${this.$route.params.id}/`)
                 .then(response => {
                     console.log('data', response.data)
+
                     this.post = response.data.post
                 })
                 .catch(error => {
                     console.log('error', error)
                 })
         },
+
         submitForm() {
             console.log('submitForm', this.body)
+
             axios
                 .post(`/api/posts/${this.$route.params.id}/comment/`, {
                     'body': this.body
                 })
                 .then(response => {
                     console.log('data', response.data)
+
                     this.post.comments.push(response.data)
                     this.post.comments_count += 1
                     this.body = ''

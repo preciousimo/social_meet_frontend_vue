@@ -1,15 +1,13 @@
 <template>
     <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-        <div class="main-left cols-span-1">
+        <div class="main-left col-span-1">
             <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
                 <img :src="user.get_avatar" class="mb-6 rounded-full">
-
-                <p><strong>{{ user.name}}</strong></p>
+                
+                <p><strong>{{ user.name }}</strong></p>
 
                 <div class="mt-6 flex space-x-8 justify-around" v-if="user.id">
-                    <RouterLink :to="{name: 'friends', params: {id: user.id}}" class="text-xs text-gray-500">
-                        {{ user.friends_count }} friends
-                    </RouterLink>
+                    <RouterLink :to="{name: 'friends', params: {id: user.id}}" class="text-xs text-gray-500">{{ user.friends_count }} friends</RouterLink>
                     <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
                 </div>
 
@@ -71,6 +69,7 @@
 
         <div class="main-right col-span-1 space-y-4">
             <PeopleYouMayKnow />
+
             <Trends />
         </div>
     </div>
@@ -80,6 +79,7 @@
 input[type="file"] {
     display: none;
 }
+
 .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;
@@ -124,7 +124,6 @@ export default {
                 id: ''
             },
             can_send_friendship_request: null,
-            
         }
     },
 
@@ -149,10 +148,12 @@ export default {
 
         sendDirectMessage() {
             console.log('sendDirectMessage')
+
             axios
                 .get(`/api/chat/${this.$route.params.id}/get-or-create/`)
                 .then(response => {
                     console.log(response.data)
+
                     this.$router.push('/chat')
                 })
                 .catch(error => {
@@ -194,9 +195,8 @@ export default {
                 })
         },
 
-       
         logout() {
-            console.log('log out!')
+            console.log('Log out')
 
             this.userStore.removeToken()
 

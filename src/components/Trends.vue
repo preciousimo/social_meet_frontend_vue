@@ -21,22 +21,27 @@
 
 <script>
 import axios from 'axios'
+
 export default {
     name: 'trends',
+
     data() {
         return {
             trends: []
         }
     },
+
     mounted() {
         this.getTrends()
     },
+
     methods: {
         getTrends() {
             axios
                 .get('/api/posts/trends/')
                 .then(response => {
                     console.log(response.data)
+
                     this.trends = response.data
                 })
                 .catch(error => {

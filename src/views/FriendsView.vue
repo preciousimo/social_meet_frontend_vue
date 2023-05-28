@@ -3,7 +3,7 @@
         <div class="main-left col-span-1">
             <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
                 <img :src="user.get_avatar" class="mb-6 rounded-full">
-
+                
                 <p><strong>{{ user.name }}</strong></p>
 
                 <div class="mt-6 flex space-x-8 justify-around">
@@ -26,7 +26,7 @@
                     v-bind:key="friendshipRequest.id"
                 >
                     <img :src="friendshipRequest.created_by.get_avatar" class="mb-6 mx-auto rounded-full">
-
+                
                     <p>
                         <strong>
                             <RouterLink :to="{name: 'profile', params:{'id': friendshipRequest.created_by.id}}">{{ friendshipRequest.created_by.name }}</RouterLink>
@@ -57,7 +57,7 @@
                     v-bind:key="user.id"
                 >
                     <img :src="user.get_avatar" class="mb-6 rounded-full">
-
+                
                     <p>
                         <strong>
                             <RouterLink :to="{name: 'profile', params:{'id': user.id}}">{{ user.name }}</RouterLink>
@@ -86,8 +86,10 @@ import PeopleYouMayKnow from '../components/PeopleYouMayKnow.vue'
 import Trends from '../components/Trends.vue'
 import FeedItem from '../components/FeedItem.vue'
 import { useUserStore } from '@/stores/user'
+
 export default {
     name: 'FriendsView',
+
     setup() {
         const userStore = useUserStore()
 
@@ -95,10 +97,12 @@ export default {
             userStore
         }
     },
+
     components: {
         PeopleYouMayKnow,
         Trends
     },
+
     data() {
         return {
             user: {},
@@ -106,15 +110,18 @@ export default {
             friends: []
         }
     },
+
     mounted() {
         this.getFriends()
     },
+
     methods: {
         getFriends() {
             axios
                 .get(`/api/friends/${this.$route.params.id}/`)
                 .then(response => {
                     console.log('data', response.data)
+
                     this.friendshipRequests = response.data.requests
                     this.friends = response.data.friends
                     this.user = response.data.user
@@ -123,8 +130,10 @@ export default {
                     console.log('error', error)
                 })
         },
+
         handleRequest(status, pk) {
             console.log('handleRequest', status)
+
             axios
                 .post(`/api/friends/${pk}/${status}/`)
                 .then(response => {
